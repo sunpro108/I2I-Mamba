@@ -8,8 +8,6 @@ from data import create_dataloader
 from models import create_model
 from util.visualizer import Visualizer
 
-import pdb
-
 
 def print_log(logger,message):
     print(message, flush=True)
@@ -43,7 +41,6 @@ if __name__ == '__main__':
     else:
         L1_avg=np.zeros([opt.niter + opt.niter_decay,len(dataset_val)])      
         psnr_avg=np.zeros([opt.niter + opt.niter_decay,len(dataset_val)])       
-    pdb.set_trace()
     
     model = create_model(opt)
     visualizer = Visualizer(opt)

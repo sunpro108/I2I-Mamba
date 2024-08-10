@@ -173,7 +173,7 @@ def define_G(
             modules.CONFIGS[vit_name],
             input_dim=input_nc,
             img_size=img_size,
-            output_dim=1,
+            output_dim=output_nc,
             vis=False,
         )
     elif which_model_netG == "i2i_mamba":
@@ -182,7 +182,7 @@ def define_G(
             modules.CONFIGS[vit_name],
             input_dim=input_nc,
             img_size=img_size,
-            output_dim=1,
+            output_dim=output_nc,
             vis=False,
         )
         config_vit = modules.CONFIGS[vit_name]
@@ -191,7 +191,7 @@ def define_G(
                 modules.CONFIGS[vit_name],
                 input_dim=input_nc,
                 img_size=img_size,
-                output_dim=1,
+                output_dim=output_nc,
                 vis=False,
             )
             save_path = pre_trained_path

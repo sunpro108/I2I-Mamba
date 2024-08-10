@@ -14,6 +14,10 @@ def create_model(opt):
         assert(opt.dataset_mode == 'single')
         from .test_model import TestModel
         model = TestModel()
+
+    elif opt.model == 'mamba_harmer':
+        from .mamba_harmer import MambaHarmerModel
+        model = MambaHarmerModel()
     
     else:
         raise NotImplementedError('model [%s] not implemented.' % opt.model)

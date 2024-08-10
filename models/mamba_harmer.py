@@ -8,13 +8,13 @@ from . import networks
 from torchvision import models
 
 
-class I2IMamba_model(BaseModel):
+class MambaHarmerModel(BaseModel):
     def name(self):
-        return "I2IMamba_model"
+        return "mamba_harmer_model"
 
     def initialize(self, opt):
         BaseModel.initialize(self, opt)
-        self.isTrain = opt.isTrain
+        self.isTrain = opt.is_for_train
 
         # load/define networks
         self.netG = networks.define_G(
@@ -86,20 +86,23 @@ class I2IMamba_model(BaseModel):
         print("-----------------------------------------------")
 
     def set_input(self, input):
-        AtoB = self.opt.which_direction == "AtoB"
-        input_A = input["A" if AtoB else "B"]
-        input_B = input["B" if AtoB else "A"]
+        input_A = input["comp"]
+        input_B = input["real"]
         if len(self.gpu_ids) > 0:
             input_A = input_A.cuda(self.gpu_ids[0], non_blocking=True)
             input_B = input_B.cuda(self.gpu_ids[0], non_blocking=True)
         self.input_A = input_A
         self.input_B = input_B
-        self.image_paths = input["A_paths" if AtoB else "B_paths"]
+        self.image_paths = input["img_path"]
+        self.mask = input["mask"].cuda()
 
     def forward(self):
+        # self.real_A = self.input_A.clone()
         self.real_A = Variable(self.input_A)
         self.fake_B = self.netG(self.real_A)
+        self.fake_B = self.real_A * self.mask + self.fake_B * (1 - self.mask)
         self.real_B = Variable(self.input_B)
+        # self.real_B = self.input_B.clone()
 
     # no backprop gradients
     def test(self):
