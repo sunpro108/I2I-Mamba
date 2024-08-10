@@ -3,10 +3,12 @@ import time
 import numpy as np
 from skimage.metrics import peak_signal_noise_ratio as psnr
 
+from options import TrainOptions
+from data import create_dataloader
 from models import create_model
-from data import CreateDataLoader
 from util.visualizer import Visualizer
-from options.train_options import TrainOptions
+
+import pdb
 
 
 def print_log(logger,message):
@@ -19,13 +21,13 @@ if __name__ == '__main__':
     opt = TrainOptions().parse()
     
     # Load train data
-    data_loader = CreateDataLoader(opt)
+    data_loader = create_dataloader(opt)
     dataset = data_loader.load_data()
     print(f'Training set size: {len(data_loader)}')
     
     # Load val data
     opt.phase = 'val'
-    data_loader_val = CreateDataLoader(opt)
+    data_loader_val = create_dataloader(opt)
     dataset_val = data_loader_val.load_data()
     print(f'Validation set size: {len(data_loader_val)}')
     
@@ -41,6 +43,7 @@ if __name__ == '__main__':
     else:
         L1_avg=np.zeros([opt.niter + opt.niter_decay,len(dataset_val)])      
         psnr_avg=np.zeros([opt.niter + opt.niter_decay,len(dataset_val)])       
+    pdb.set_trace()
     
     model = create_model(opt)
     visualizer = Visualizer(opt)

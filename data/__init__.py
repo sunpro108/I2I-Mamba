@@ -5,7 +5,7 @@ import torch.utils.data
 from data.base_data_loader import BaseDataLoader
 
 
-def CreateDataLoader(opt):
+def create_dataloader(opt):
     data_loader = CustomDatasetDataLoader()
     print(data_loader.name())
     data_loader.initialize(opt)
@@ -24,6 +24,9 @@ def CreateDataset(opt):
         elif opt.dataset_mode == 'single':
             from data.single_dataset import SingleDataset
             dataset = SingleDataset()
+        elif opt.dataset_mode == 'iharmony':
+            from data.iharmony4_dataset import IHarmony4Dataset
+            dataset = IHarmony4Dataset()
         else:
             raise ValueError("Dataset [%s] not recognized." % opt.dataset_mode)  
             print("dataset [%s] was created" % (dataset.name()))

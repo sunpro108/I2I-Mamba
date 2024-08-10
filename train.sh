@@ -1,0 +1,22 @@
+python3 train.py \
+--name ixi_t2__pd \
+--dataroot datasets/iharmony4/Hday2night \
+--dataset_mode iharmony \
+--loadSize 256 \
+--fineSize 256 \
+--gpu_ids 0,1,2,3 \
+--model i2i_mamba_one \
+--which_model_netG i2i_mamba \
+--which_direction AtoB \
+--lambda_A 100 \
+--norm batch \
+--pool_size 0 \
+--output_nc 1 \
+--input_nc 1 \
+--niter 30 \
+--niter_decay 30 \
+--lr 0.0002 \
+--save_epoch_freq 5 \
+--checkpoints_dir checkpoints/ \
+--display_id 0 \
+--is_for_train
